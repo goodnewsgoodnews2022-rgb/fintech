@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/portfolio_card.dart';
+import '../widgets/portfolio_chart.dart'; // Imported your new chart asset here
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,20 +15,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Fixed: Removed the leading underscore to comply with Dart linter standards
     final List<Widget> views = [
       // Track 3 Feature A: Main Portfolio Hub
-      const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            PortfolioCard(
-              totalBalance: 12450.85,
-              cryptoAddress: '0x7a...4b2f',
-            ),
-          ],
+      const SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              PortfolioCard(
+                totalBalance: 12450.85,
+                cryptoAddress: '0x7a...4b2f',
+              ),
+              SizedBox(height: 16),
+              PortfolioChart(), // Mounted right beneath the card item layout
+            ],
+          ),
         ),
       ),
       // Track 3 Feature B: Crypto Asset Workspace
@@ -48,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.bgCanvas,
-      body: SafeArea(child: views[_currentIndex]), // Updated here too
+      body: SafeArea(child: views[_currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColors.bgSurface,
         currentIndex: _currentIndex,
