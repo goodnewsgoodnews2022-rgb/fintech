@@ -13,7 +13,6 @@ class PortfolioCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Linked directly to your team's design token track
     final Color trackPurple = AppColors.dev3Purple; 
 
     return Container(
@@ -23,7 +22,8 @@ class PortfolioCard extends StatelessWidget {
         color: AppColors.bgSurface,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: trackPurple.withOpacity(0.15),
+          // Fixed using the updated modern Flutter parameter format
+          color: trackPurple.withValues(alpha: 0.15),
           width: 1,
         ),
       ),
@@ -56,7 +56,8 @@ class PortfolioCard extends StatelessWidget {
               color: AppColors.bgCanvas,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: trackPurple.withOpacity(0.4),
+                // Fixed here as well
+                color: trackPurple.withValues(alpha: 0.4),
                 width: 1.2,
               ),
             ),
