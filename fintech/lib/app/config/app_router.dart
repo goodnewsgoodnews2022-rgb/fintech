@@ -45,6 +45,11 @@ class AppRouter {
     // SCREEN DECLARATION MAPS
     // ====================================================================
     routes: [
+      // Part of your app_router.dart configuration setup:
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const SplashScreen(), // Launches the splash gateway first
+),
       GoRoute(
         path: splash,
         builder: (context, state) => const SplashScreen(),

@@ -1,7 +1,11 @@
+// lib/app/splash/splash_screen.dart
+
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/network/supabase_client.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../app/config/app_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,13 +21,26 @@ class _SplashScreenState extends State<SplashScreen> {
     _initializeAppSession();
   }
 
+  /// Evaluates real background data and routes the user dynamically
   Future<void> _initializeAppSession() async {
-    // Simulate checking the Supabase auth session token state
+    // 1. Keep your smooth 3-second branding delay
     await Future.delayed(const Duration(seconds: 3));
     
-    if (mounted) {
-      // Direct user to onboarding/login or the main dashboard portfolio
-      context.go(AppRouter.dashboard); 
+    if (!mounted) return;
+
+    try {
+      // 2. Core Check: Does a valid Supabase authentication session exist?
+      final currentSession = SupabaseClientService.instance.currentSession;
+      if (currentSession != null) {
+        print('🔐 [SPLASH] Valid session token verified. Routing straight to Secure Dashboard.');
+        context.go('/dashboard');
+      } else {
+        print('🔒 [SPLASH] No active session found. Routing to standard Authentication.');
+        context.go('/loginscreen'); // Points directly to Developer 2's login screen track
+      }
+    } catch (e) {
+      print('❌ [SPLASH-ERROR] Dynamic gateway verification failed: $e');
+      context.go('/loginscreen'); // Safe fallback choice if cache or database breaks on boot
     }
   }
 
@@ -35,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
             child: Text(
-              'G R E Y', // Replace with your actual vector brand asset logo image
+              'G R E Y', // Your actual custom vector branding signature
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 32,

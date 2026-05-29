@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'config/app_router.dart';
 import 'config/environment.dart';
-import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart'; // 1. Imported your brand new unified theme compiler
 
 class FintechApp extends StatefulWidget {
   const FintechApp({super.key});
@@ -26,33 +26,11 @@ class _FintechAppState extends State<FintechApp> {
       title: 'Premium Multi-Currency Engine',
       debugShowCheckedModeBanner: false,
       
+      // 2. CLEANED UP: Replaced the massive ThemeData block with your centralized engine instance
+      theme: AppTheme.darkTheme,
+      
       // Hook up your global GoRouter configuration grid
       routerConfig: AppRouter.router,
-      
-      // ====================================================================
-      // PROFESSIONAL DARK MODE DESIGN IMPLEMENTATION
-      // ====================================================================
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppColors.bgCanvas,
-        primaryColor: AppColors.dev1Silver,
-        
-        // Define clean global text parameters
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold),
-          bodyLarge: TextStyle(color: AppColors.textPrimary),
-          bodyMedium: TextStyle(color: AppColors.textSecondary),
-        ),
-        
-        // Match interactive button layouts to your design tokens
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.bgCanvas,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          iconTheme: IconThemeData(color: AppColors.textPrimary),
-        ),
-      ),
     );
   }
 }
