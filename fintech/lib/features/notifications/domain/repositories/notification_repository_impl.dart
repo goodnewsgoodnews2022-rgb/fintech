@@ -74,7 +74,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
     if (userId == null) throw Exception('User not authenticated');
 
     return _supabase
-        .channel('notifications_${userId}')
+        .channel('notifications_$userId')
         .onPostgresChanges(
           event: PostgresChangeEvent.insert,
           schema: 'public',

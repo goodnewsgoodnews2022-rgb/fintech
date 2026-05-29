@@ -1,15 +1,40 @@
-// lib/main.dart
+import 'package:fintech/app/app.dart';
+import 'package:fintech/app/config/app_router.dart';
+import 'package:fintech/app/config/environment.dart';
+import 'package:fintech/core/theme/app_theme.dart';
+import 'package:fintech/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:fintech/features/authentication/presentation/bloc/auth_event.dart';
+import 'package:fintech/features/authentication/presentation/bloc/bloc_dependency.dart';
 import 'package:flutter/material.dart';
-import 'app/app.dart';
-import 'core/network/supabase_client.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<void> main() async {
-  // 1. Ensure engine hardware binding layer is fully ready
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await Supabase.initialize(
+    url: Environment.supabaseUrl,
+    anonKey: Environment.supabaseAnonKey,
+  );
+  setupDependencies();  // registers AuthBloc and others with GetIt
 
-  // 2. Initialize your newly created shared initialization engine
-  await SupabaseClientService.instance.initialize();
+  runApp(MyApp());
+}
 
-  // 3. Mount and boot your application shell frame
-  runApp(const FintechApp());
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<AuthBloc>()..add(AuthCheckStatus())),
+        // Add other blocs later (NotificationBloc, FiatWalletBloc, etc.)
+      ],
+      child: MaterialApp.router(
+        routerConfig: AppRouter.router,  // your GoRouter instance
+        title: 'Fintech App',
+        theme: AppTheme.darkTheme,
+      ),
+    );
+  }
 }

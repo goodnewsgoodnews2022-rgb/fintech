@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
             child: Text(
-              'G R E Y', // Your actual custom vector branding signature
+              'Fintech', // Your actual custom vector branding signature
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 32,
