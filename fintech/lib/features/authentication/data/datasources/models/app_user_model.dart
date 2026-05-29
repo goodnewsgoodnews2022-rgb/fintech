@@ -1,4 +1,5 @@
 import 'package:fintech/features/authentication/domain/entities/app_user.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppUserModel extends AppUser {
   const AppUserModel({

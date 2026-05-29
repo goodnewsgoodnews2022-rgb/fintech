@@ -75,7 +75,6 @@ class AuthRepositoryImpl implements AuthRepository {
     final session = _supabase.auth.currentSession;
     if (session == null) return null;
     final user = session.user;
-    if (user == null) return null;
 
     final profile = await _supabase
         .from('profiles')
