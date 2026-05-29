@@ -1,5 +1,6 @@
 // lib/app/config/app_router.dart
 
+import 'package:fintech/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -48,7 +49,7 @@ class AppRouter {
       // Part of your app_router.dart configuration setup:
       GoRoute(
         path: '/',
-        builder: (context, state) => const SplashScreen(), // Launches the splash gateway first
+        builder: (context, state) =>  SignupScreen(), // Launches the splash gateway first
 ),
       GoRoute(
         path: splash,
@@ -64,10 +65,19 @@ class AppRouter {
       // ------------------------------------------------------------------
       GoRoute(
         path: login,
-        builder: (context, state) => const Scaffold(
-          backgroundColor: Color(0xFF0A0E17),
-          body: Center(child: Text('Onboarding/Auth\n(Developer 2 Work Area)', 
-            textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 16))),
+        builder: (context, state) => Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+               
+                ElevatedButton(
+                  onPressed: () => context.go(dashboard),
+                  child: const Text('Mock Login'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
       GoRoute(
